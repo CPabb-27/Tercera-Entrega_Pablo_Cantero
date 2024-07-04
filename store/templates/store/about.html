@@ -1,0 +1,21 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Quiénes Somos{% endblock %}
+
+{% block content %}
+<div class="about-wrapper">
+    <div class="about-content">
+        <h1>Quiénes Somos</h1>
+        <div class="about-description">
+            <div class="about-text">
+                <p>Somos un grupo de hinchas decididos a vender productos del taladro para hinchas y socios de club</p>
+                <p>Desde nuestros inicios, hemos tratado de llevar a la familia banfileña por todo sur en busca de que los productos sean entregados en tiempo y forma sin estar una eternidad esperando o despachos fallidos.</p>
+            </div>
+            <div class="about-photo">
+                <img src="{% static 'store/images/history_photo.webp' %}" alt="Nuestra historia">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

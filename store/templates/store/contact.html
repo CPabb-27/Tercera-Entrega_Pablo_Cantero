@@ -1,0 +1,32 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Contacto{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+    <h1>Contacto</h1>
+    <p>Déjanos tu consulta y te responderemos a la brevedad.</p>
+    <div class="dark-box">
+        <form method="post" action="{% url 'contact' %}">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    {{ form.name.label_tag }}<br>
+                    {{ form.name }}
+                </div>
+                <div class="form-group">
+                    {{ form.email.label_tag }}<br>
+                    {{ form.email }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    {{ form.message.label_tag }}<br>
+                    {{ form.message }}
+                </div>
+            </div>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
