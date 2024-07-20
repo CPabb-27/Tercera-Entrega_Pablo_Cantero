@@ -20,3 +20,18 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Associate(models.Model):
+    SOCIO_CHOICES = [
+        ('socio_activo', 'Socio Activo'),
+        ('socio_cadete', 'Socio Cadete'),
+        ('socio_menor', 'Socio Menor'),
+        ('socio_interior_pais', 'Socio Interior País'),
+    ]
+
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    dni = models.CharField(max_length=20)
+    age = models.IntegerField()
+    socio_type = models.CharField(max_length=20, choices=SOCIO_CHOICES)

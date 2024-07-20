@@ -3,7 +3,16 @@ from django.shortcuts import render, redirect
 from .forms  import ContactForm
 from .forms import ProductForm
 from django.shortcuts import render, get_object_or_404, redirect
-
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponse
+from .forms import AssociateForm
+from .models import Associate
 
 def about(request):
     return render(request, 'store/about.html')
@@ -45,7 +54,7 @@ def add_to_cart(request, product_id):
    
     return redirect('product_list')
 
-
+@login_required
 def product_form(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
@@ -55,3 +64,67 @@ def product_form(request):
     else:
         form = ProductForm()
     return render(request, 'store/product_form.html', {'form': form})
+
+#@login_required
+#def asociarme(request):
+#    return render(request, 'store/asociarme.html')
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('product_list') 
+    else:
+        form = AuthenticationForm()
+    return render(request, 'store/login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'store/signup.html', {'form': form})
+
+def index(request):
+    return render(request, 'store/base.html')
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.first_name = request.POST['first_name']
+            user.last_name = request.POST['last_name']
+            user.save()
+            login(request, user)
+            return redirect('index') 
+    else:
+        form = UserCreationForm()
+    return render(request, 'store/signup.html', {'form': form})
+
+def associate_view(request):
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        dni = request.POST['dni']
+        age = request.POST['age']
+        membership_type = request.POST['membership_type']
+        Associate.objects.create(
+            first_name=first_name,
+            last_name=last_name,
+            dni=dni,
+            age=age,
+            membership_type=membership_type
+        )
+        return redirect('associate')
+    
+    associates = Associate.objects.all()
+    return render(request, 'store/associate.html', {'associates': associates})

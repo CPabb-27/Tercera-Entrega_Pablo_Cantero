@@ -1,0 +1,21 @@
+{% extends "entidades/index.html" %} 
+{% block titulo %} 
+    <h1 class="mb-5">Logout</h1> 
+{% endblock titulo %} 
+{% block contenido %} 
+    {% csrf_token %} 
+    <h4> 
+        <p style="color:red" align="center">Se ha deslogueado exitosamente</p> 
+    </h4> 
+{% endblock contenido %} 
+ 
+ 
+
+3) En index.html colocar el link al logout incluyéndolo dentro de un formulario con post y el 
+código {% csrf_token %}. 
+Ejemplo: 
+ 
+<form method="post" action="{% url 'logout' %}"> 
+            {% csrf_token %} 
+             <button type="submit" class="nav-link bg-danger ms-2">Logout</button> 
+</form> 
