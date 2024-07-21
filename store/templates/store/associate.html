@@ -4,41 +4,43 @@
 
 {% block content %}
 <div class="associate-container">
-    <h1>Asociarse</h1>
-    <form method="post" action="{% url 'associate' %}">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="id_first_name">Nombre</label>
-            <input type="text" name="first_name" id="id_first_name" required>
-        </div>
-        <div class="form-group">
-            <label for="id_last_name">Apellido</label>
-            <input type="text" name="last_name" id="id_last_name" required>
-        </div>
-        <div class="form-group">
-            <label for="id_dni">DNI</label>
-            <input type="text" name="dni" id="id_dni" required>
-        </div>
-        <div class="form-group">
-            <label for="id_age">Edad</label>
-            <input type="number" name="age" id="id_age" required>
-        </div>
-        <div class="form-group">
-            <label for="id_membership_type">Tipo de Socio</label>
-            <select name="membership_type" id="id_membership_type" required>
-                <option value="socio_activo">Socio Activo</option>
-                <option value="socio_cadete">Socio Cadete</option>
-                <option value="socio_menor">Socio Menor</option>
-                <option value="socio_interior_pais">Socio Interior País</option>
-            </select>
-        </div>
-        <button type="submit">Enviar</button>
-    </form>
+    <div class="form-container">
+        <h1>Asociarse</h1>
+        <form method="post" action="{% url 'associate' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_first_name">Nombre</label>
+                <input type="text" name="first_name" id="id_first_name" required>
+            </div>
+            <div class="form-group">
+                <label for="id_last_name">Apellido</label>
+                <input type="text" name="last_name" id="id_last_name" required>
+            </div>
+            <div class="form-group">
+                <label for="id_dni">DNI</label>
+                <input type="text" name="dni" id="id_dni" required>
+            </div>
+            <div class="form-group">
+                <label for="id_age">Edad</label>
+                <input type="number" name="age" id="id_age" required>
+            </div>
+            <div class="form-group">
+                <label for="id_socio_type">Tipo de Socio</label>
+                <select name="socio_type" id="id_socio_type" required>
+                    <option value="socio_activo">Socio Activo</option>
+                    <option value="socio_cadete">Socio Cadete</option>
+                    <option value="socio_menor">Socio Menor</option>
+                    <option value="socio_interior_pais">Socio Interior País</option>
+                </select>
+            </div>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
     <div class="associate-list">
         <h2>Lista de Socios</h2>
         <ul>
             {% for associate in associates %}
-                <li>{{ associate.first_name }} {{ associate.last_name }} - {{ associate.dni }} - {{ associate.age }} - {{ associate.membership_type }}</li>
+                <li>{{ associate.first_name }} {{ associate.last_name }} - {{ associate.dni }} - {{ associate.age }} - {{ associate.socio_type }}</li>
             {% endfor %}
         </ul>
     </div>

@@ -25,6 +25,7 @@
                 <li><a href="{% url 'contact' %}"><i class="fas fa-envelope"></i> Contacto</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'associate' %}"><i class="fas fa-users"></i> Asociarse</a></li>
+                    <li><a href="{% url 'acreditation' %}"><i class="fas fa-id-badge"></i> Acreditaciones</a></li>
                     <li><a href="{% url 'product_form' %}"><i class="fas fa-plus"></i> Formulario</a></li>
                     <li><a href="#"><i class="fas fa-user"></i> {{ user.first_name }} {{ user.last_name }}</a></li>
                     <li>

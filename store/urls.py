@@ -21,5 +21,7 @@ urlpatterns = [
     path('signup/', views.signup_view, name='signup'),
     path('', views.index, name='index'),
     path('associate/', associate_view, name='associate'),
+    path('acreditation/', acreditation_view, name='acreditation'),
+    path('acreditation/edit/<int:pk>/', edit_acreditation_view, name='edit_acreditation'),
 ]
 

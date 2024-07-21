@@ -13,6 +13,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from .forms import AssociateForm
 from .models import Associate
+from .models import Acreditation
+from .forms import AcreditationForm
 
 def about(request):
     return render(request, 'store/about.html')
@@ -116,15 +118,37 @@ def associate_view(request):
         last_name = request.POST['last_name']
         dni = request.POST['dni']
         age = request.POST['age']
-        membership_type = request.POST['membership_type']
+        socio_type = request.POST['socio_type']
         Associate.objects.create(
             first_name=first_name,
             last_name=last_name,
             dni=dni,
             age=age,
-            membership_type=membership_type
+            socio_type=socio_type
         )
         return redirect('associate')
     
     associates = Associate.objects.all()
     return render(request, 'store/associate.html', {'associates': associates})
+
+def acreditation_view(request):
+    if request.method == 'POST':
+        form = AcreditationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('acreditation')
+    else:
+        form = AcreditationForm()
+    acreditations = Acreditation.objects.all()
+    return render(request, 'store/acreditation.html', {'form': form, 'acreditations': acreditations})
+
+def edit_acreditation_view(request, pk):
+    acreditation = get_object_or_404(Acreditation, pk=pk)
+    if request.method == 'POST':
+        form = AcreditationForm(request.POST, instance=acreditation)
+        if form.is_valid():
+            form.save()
+            return redirect('acreditation')
+    else:
+        form = AcreditationForm(instance=acreditation)
+    return render(request, 'store/edit_acreditation.html', {'form': form})

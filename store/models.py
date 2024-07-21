@@ -22,6 +22,7 @@ class Product(models.Model):
         return self.name
 
 
+
 class Associate(models.Model):
     SOCIO_CHOICES = [
         ('socio_activo', 'Socio Activo'),
@@ -35,3 +36,16 @@ class Associate(models.Model):
     dni = models.CharField(max_length=20)
     age = models.IntegerField()
     socio_type = models.CharField(max_length=20, choices=SOCIO_CHOICES)
+
+    
+class Acreditation(models.Model):
+    name = models.CharField(max_length=100)
+    surname = models.CharField(max_length=100)
+    email = models.EmailField()
+    address = models.CharField(max_length=255)
+    address_number = models.CharField(max_length=10)
+    media_outlet = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.name} {self.surname}"
+

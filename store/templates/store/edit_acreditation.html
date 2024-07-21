@@ -1,0 +1,14 @@
+{% extends "store/base.html" %}
+
+{% block title %}Editar Acreditación{% endblock %}
+
+{% block content %}
+<div class="edit-acreditation-container">
+    <h1>Editar Acreditación</h1>
+    <form method="post" action="{% url 'edit_acreditation' form.instance.pk %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar Cambios</button>
+    </form>
+</div>
+{% endblock %}
