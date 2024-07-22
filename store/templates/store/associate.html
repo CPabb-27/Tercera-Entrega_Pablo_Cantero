@@ -40,7 +40,14 @@
         <h2>Lista de Socios</h2>
         <ul>
             {% for associate in associates %}
-                <li>{{ associate.first_name }} {{ associate.last_name }} - {{ associate.dni }} - {{ associate.age }} - {{ associate.socio_type }}</li>
+                <li>
+                    {{ associate.first_name }} {{ associate.last_name }} - {{ associate.dni }} - {{ associate.age }} - {{ associate.socio_type }}
+                    <a href="{% url 'edit_associate' associate.id %}">Editar</a>
+                    <form method="post" action="{% url 'delete_associate' associate.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </li>
             {% endfor %}
         </ul>
     </div>

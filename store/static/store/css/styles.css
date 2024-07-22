@@ -189,10 +189,10 @@ nav ul li i {
     margin-bottom: 20px;
 }
 
-/* Nuevo CSS para productos */
+
 .product-list {
     padding: 2em;
-    margin-top: auto; /* Mueve la lista de productos a la parte inferior */
+    margin-top: auto; 
     width: 100%;
 }
 
@@ -264,97 +264,103 @@ nav ul li i {
     background: darkred;
 }
 
-.associate-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    gap: 20px;
+.associate-container, .acreditation-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 2em;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 2em auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.form-container, .associate-list {
-    flex: 1;
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.associate-container h1, .acreditation-container h1 {
+    font-size: 2em;
+    margin-bottom: 1em;
 }
+
+.associate-container h2, .acreditation-container h2 {
+    font-size: 1.5em;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+
+.associate-container form, .acreditation-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
 
 .form-group {
-    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 5px;
+    font-size: 1.1em;
+    margin-bottom: 0.5em;
 }
 
-.form-group input, .form-group select {
-    width: 100%;
-    padding: 8px;
+.form-group input,
+.form-group select {
+    padding: 0.5em;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 1em;
+    width: 100%;
 }
 
-button {
-    padding: 10px 15px;
-    background-color: #28a745;
-    color: #fff;
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #006400; 
+    outline: none;
+}
+
+
+.associate-container button, .acreditation-container button {
+    background-color: #006400; 
+    color: white;
+    padding: 0.75em;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 1.2em;
 }
 
-button:hover {
-    background-color: #218838;
+.associate-container button:hover, .acreditation-container button:hover {
+    background-color: #004d00; 
 }
 
-.associate-list ul {
+
+.associate-list {
+    margin-top: 2em;
+}
+
+.associate-list ul, .acreditation-list ul {
     list-style-type: none;
     padding: 0;
 }
 
-.associate-list li {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
+.associate-list li, .acreditation-list li {
+    background: rgba(255, 255, 255, 0.2); 
+    padding: 0.75em;
+    border-radius: 5px;
+    margin-bottom: 0.5em;
 }
 
-.acreditation-container, .edit-acreditation-container {
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 8px; 
 }
 
-.acreditation-container {
+nav ul li a {
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
+    align-items: center;
 }
 
-.form-container {
-    flex: 1;
-}
-
-.acreditation-list {
-    flex: 2;
-}
-
-.acreditation-list ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.acreditation-list li {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-}
-
-.acreditation-list li a {
-    margin-left: 20px;
-    color: #007bff;
-    text-decoration: none;
-}
-
-.acreditation-list li a:hover {
-    text-decoration: underline;
-}

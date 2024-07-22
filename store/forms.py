@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Associate
 from .models import Acreditation
+from store.models import UserProfile
 
 class ContactForm(forms.Form):
     name = forms.CharField(max_length=100, label='Nombre')
@@ -29,7 +30,13 @@ class AssociateForm(forms.ModelForm):
         model = Associate
         fields = ['first_name', 'last_name', 'dni', 'age', 'socio_type']
 
+
 class AcreditationForm(forms.ModelForm):
     class Meta:
         model = Acreditation
-        fields = ['name', 'surname', 'email', 'address', 'address_number', 'media_outlet']
+        fields = ['nombre', 'apellido', 'email', 'direccion_domicilio', 'numero_domicilio', 'medio_televisivo']
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['avatar']

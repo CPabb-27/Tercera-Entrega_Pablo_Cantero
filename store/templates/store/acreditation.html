@@ -4,24 +4,47 @@
 
 {% block content %}
 <div class="acreditation-container">
-    <div class="form-container">
-        <h1>Acreditaciones</h1>
-        <form method="post" action="{% url 'acreditation' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Enviar</button>
-        </form>
-    </div>
-    <div class="acreditation-list">
-        <h2>Lista de Acreditaciones</h2>
-        <ul>
-            {% for acreditation in acreditations %}
-                <li>
-                    {{ acreditation.name }} {{ acreditation.surname }} - {{ acreditation.email }} - {{ acreditation.address }} {{ acreditation.address_number }} - {{ acreditation.media_outlet }}
-                    <a href="{% url 'edit_acreditation' acreditation.pk %}">Editar</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+    <h1>Acreditaciones</h1>
+    <form method="post" action="{% url 'acreditation' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_nombre">Nombre</label>
+            <input type="text" name="nombre" id="id_nombre" required>
+        </div>
+        <div class="form-group">
+            <label for="id_apellido">Apellido</label>
+            <input type="text" name="apellido" id="id_apellido" required>
+        </div>
+        <div class="form-group">
+            <label for="id_email">Email</label>
+            <input type="email" name="email" id="id_email" required>
+        </div>
+        <div class="form-group">
+            <label for="id_direccion_domicilio">Dirección de Domicilio</label>
+            <input type="text" name="direccion_domicilio" id="id_direccion_domicilio" required>
+        </div>
+        <div class="form-group">
+            <label for="id_numero_domicilio">Número de Domicilio</label>
+            <input type="text" name="numero_domicilio" id="id_numero_domicilio" required>
+        </div>
+        <div class="form-group">
+            <label for="id_medio_televisivo">Medio al que pertenece</label>
+            <input type="text" name="medio_televisivo" id="id_medio_televisivo" required>
+        </div>
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+
+<div class="acreditation-list">
+    <h2>Lista de Acreditaciones</h2>
+    <ul>
+        {% for acreditation in acreditations %}
+            <li>
+                {{ acreditation.nombre }} {{ acreditation.apellido }} - {{ acreditation.email }} - {{ acreditation.direccion_domicilio }} {{ acreditation.numero_domicilio }} - {{ acreditation.medio_televisivo }}
+                <a href="{% url 'edit_acreditation' acreditation.pk %}" class="edit-button">Editar</a>
+                <a href="{% url 'delete_acreditation' acreditation.pk %}" class="delete-button">Eliminar</a>
+            </li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}

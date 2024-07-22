@@ -1,5 +1,4 @@
 from .models import Product
-from django.shortcuts import render, redirect
 from .forms  import ContactForm
 from .forms import ProductForm
 from django.shortcuts import render, get_object_or_404, redirect
@@ -7,7 +6,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
@@ -15,6 +13,10 @@ from .forms import AssociateForm
 from .models import Associate
 from .models import Acreditation
 from .forms import AcreditationForm
+from store.models import UserProfile
+from store.forms import UserProfileForm
+
+
 
 def about(request):
     return render(request, 'store/about.html')
@@ -26,7 +28,7 @@ def contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             
-            print(form.cleaned_data)  # Imprime los datos del formulario en la consola
+            print(form.cleaned_data)  
             return redirect('contact')  
     else:
         form = ContactForm()
@@ -62,14 +64,12 @@ def product_form(request):
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('product_list')  # Redirige a la lista de productos después de guardar
+            return redirect('product_list')  
     else:
         form = ProductForm()
     return render(request, 'store/product_form.html', {'form': form})
 
-#@login_required
-#def asociarme(request):
-#    return render(request, 'store/asociarme.html')
+
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -112,6 +112,7 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'store/signup.html', {'form': form})
 
+@login_required
 def associate_view(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
@@ -131,6 +132,28 @@ def associate_view(request):
     associates = Associate.objects.all()
     return render(request, 'store/associate.html', {'associates': associates})
 
+def edit_associate(request, id):
+    associate = get_object_or_404(Associate, id=id)
+
+    if request.method == 'POST':
+        associate.first_name = request.POST['first_name']
+        associate.last_name = request.POST['last_name']
+        associate.dni = request.POST['dni']
+        associate.age = request.POST['age']
+        associate.socio_type = request.POST['socio_type']
+        associate.save()
+        return redirect('associate')
+
+    return render(request, 'store/edit_associate.html', {'associate': associate})
+
+def delete_associate(request, id):
+    associate = get_object_or_404(Associate, id=id)
+    if request.method == 'POST':
+        associate.delete()
+        return redirect('associate')
+    return render(request, 'store/confirm_delete.html', {'associate': associate})
+
+@login_required
 def acreditation_view(request):
     if request.method == 'POST':
         form = AcreditationForm(request.POST)
@@ -139,9 +162,11 @@ def acreditation_view(request):
             return redirect('acreditation')
     else:
         form = AcreditationForm()
+    
     acreditations = Acreditation.objects.all()
     return render(request, 'store/acreditation.html', {'form': form, 'acreditations': acreditations})
 
+@login_required
 def edit_acreditation_view(request, pk):
     acreditation = get_object_or_404(Acreditation, pk=pk)
     if request.method == 'POST':
@@ -152,3 +177,37 @@ def edit_acreditation_view(request, pk):
     else:
         form = AcreditationForm(instance=acreditation)
     return render(request, 'store/edit_acreditation.html', {'form': form})
+
+@login_required
+def delete_acreditation_view(request, pk):
+    acreditation = get_object_or_404(Acreditation, pk=pk)
+    if request.method == 'POST':
+        acreditation.delete()
+        return redirect('acreditation')
+    return render(request, 'store/delete_acreditation.html', {'acreditation': acreditation})
+
+
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  
+    else:
+        form = UserProfileForm(instance=request.user.userprofile)
+    return render(request, 'store/edit_profile.html', {'form': form})
+
+def create_user_profile():
+    users = User.objects.all()
+    for user in users:
+        if not hasattr(user, 'userprofile'):
+            UserProfile.objects.create(user=user)
+
+@login_required
+def profile_view(request):
+    user_profile = request.user.userprofile
+    return render(request, 'store/profile.html', {'user_profile': user_profile})
+

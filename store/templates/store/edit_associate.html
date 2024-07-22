@@ -1,0 +1,36 @@
+{% extends "store/base.html" %}
+
+{% block title %}Editar Socio{% endblock %}
+
+{% block content %}
+<h1>Editar Socio</h1>
+<form method="post" action="{% url 'edit_associate' associate.id %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="id_first_name">Nombre</label>
+        <input type="text" name="first_name" id="id_first_name" value="{{ associate.first_name }}" required>
+    </div>
+    <div class="form-group">
+        <label for="id_last_name">Apellido</label>
+        <input type="text" name="last_name" id="id_last_name" value="{{ associate.last_name }}" required>
+    </div>
+    <div class="form-group">
+        <label for="id_dni">DNI</label>
+        <input type="text" name="dni" id="id_dni" value="{{ associate.dni }}" required>
+    </div>
+    <div class="form-group">
+        <label for="id_age">Edad</label>
+        <input type="number" name="age" id="id_age" value="{{ associate.age }}" required>
+    </div>
+    <div class="form-group">
+        <label for="id_socio_type">Tipo de Socio</label>
+        <select name="socio_type" id="id_socio_type" required>
+            <option value="socio_activo" {% if associate.socio_type == 'socio_activo' %}selected{% endif %}>Socio Activo</option>
+            <option value="socio_cadete" {% if associate.socio_type == 'socio_cadete' %}selected{% endif %}>Socio Cadete</option>
+            <option value="socio_menor" {% if associate.socio_type == 'socio_menor' %}selected{% endif %}>Socio Menor</option>
+            <option value="socio_interior_pais" {% if associate.socio_type == 'socio_interior_pais' %}selected{% endif %}>Socio Interior País</option>
+        </select>
+    </div>
+    <button type="submit">Actualizar</button>
+</form>
+{% endblock %}
